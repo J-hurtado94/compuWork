@@ -12,6 +12,13 @@ import static org.compuwork.utils.BeneficiosEmpleadosPermanentes.BENEFICIOS_EMPL
 
 public class Main {
     public static void main(String[] args) {
+        /*
+        Aca se encuentran las acciones principales, los demas metodos como de busqueda, eliminacion
+        y demas, se pueden visualizar en cada una de las clases, para su validacion
+
+         */
+
+
         //Se crea gestor de departamentos
         GestorDepartamentos gestorDepartamentos = new GestorDepartamentos();
         // Se crea gestor de empleados
