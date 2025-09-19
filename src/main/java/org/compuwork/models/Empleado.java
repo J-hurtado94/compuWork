@@ -74,17 +74,6 @@ public abstract class Empleado {
         this.correo = correo;
     }
 
-//    public void setMetrica(Metrica metrica, double valor) {
-//        metricas.put(metrica, valor);
-//    }
-
-//    public double getMetrica(Metrica metrica) {
-//        return metricas.getOrDefault(metrica, 0.0);
-//    }
-//
-//    public Map<Metrica, Double> getMetricas() {
-//        return new EnumMap<>(metricas); // copia defensiva
-//    }
 
 
     public Map<Metrica, Integer> getMetricas() {
