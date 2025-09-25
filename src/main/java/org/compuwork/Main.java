@@ -14,7 +14,9 @@ public class Main {
     public static void main(String[] args) {
         /*
         Aca se encuentran las acciones principales, los demas metodos como de busqueda, eliminacion
-        y demas, se pueden visualizar en cada una de las clases, para su validacion
+        y demas, se pueden visualizar en cada una de las clases, para su validacion.
+
+        Nota: El apartado de inicio de sesion lo refinare en el momento que implemente el front
 
          */
 
