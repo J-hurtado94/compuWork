@@ -9,7 +9,7 @@ public class EmpleadoPermanente extends Empleado{
     private List<String> benificios;
     private double salario;
 
-    public EmpleadoPermanente(String nombre, String apellido, String correo, double salario, List<String> benificios) {
+    public EmpleadoPermanente(String nombre, String apellido, String correo, double salario) {
         super(nombre, apellido, correo, salario);
         this.benificios = benificios;
         this.salario = salario;

@@ -7,8 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public abstract class Empleado {
-    private String idEmpleado;
+public abstract class Empleado extends Usuario{
     private String nombre;
     private String apellido;
     private String correo;
@@ -19,7 +18,7 @@ public abstract class Empleado {
     private Map<Metrica, Integer> metricas = new HashMap<>();
 
     public Empleado( String nombre, String apellido, String correo, double salario) {
-        this.idEmpleado = UUID.randomUUID().toString();
+        super(nombre,Rol.EMPLEADO);
         this.nombre = nombre;
         this.apellido = apellido;
         this.correo = correo;
@@ -32,9 +31,7 @@ public abstract class Empleado {
     public abstract String tipoEmpleado();
 
 
-    public String getIdEmpleado() {
-        return idEmpleado;
-    }
+
 
     public String getNombre() {
         return nombre;
@@ -83,7 +80,6 @@ public abstract class Empleado {
     @Override
     public String toString() {
         return "Empleado{" +
-                "idEmpleado='" + idEmpleado + '\'' +
                 ", nombre='" + nombre + '\'' +
                 ", apellido='" + apellido + '\'' +
                 ", correo='" + correo + '\'' +
