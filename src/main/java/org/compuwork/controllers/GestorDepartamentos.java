@@ -46,5 +46,23 @@ public class GestorDepartamentos {
         return new ArrayList<>(repositorio);
     }
 
+    public Departamento buscarODefault(String nombre) {
 
+        if (nombre == null || nombre.trim().isEmpty()) {
+            nombre = "General";
+        }
+
+
+        for (Departamento d : getRepositorio()) {
+            if (d.getNombre().equalsIgnoreCase(nombre)) {
+                return d;
+            }
+        }
+
+        return crearDepartamento(nombre);
+    }
+
+    public List<Departamento> getRepositorio() {
+        return repositorio;
+    }
 }

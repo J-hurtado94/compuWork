@@ -1,7 +1,9 @@
 package org.compuwork;
 
+import org.compuwork.controllers.GestorDepartamentos;
 import org.compuwork.controllers.GestorEmpleados;
 import org.compuwork.models.*;
+import org.compuwork.view.AdminView;
 import org.compuwork.view.LoginAdminView;
 import org.compuwork.view.LoginMain;
 
@@ -10,15 +12,20 @@ import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) {
-        GestorEmpleados gestor = new GestorEmpleados();
 
-        // Crear administrador inicial
-        Administrador admin = new Administrador("admin");
-        gestor.agregarUsuario(admin);
+        SwingUtilities.invokeLater(() -> {
+            GestorDepartamentos gestorDepartamentos = new GestorDepartamentos();
+            GestorEmpleados gestorEmpleados = new GestorEmpleados();
 
-        SwingUtilities.invokeLater(() -> new LoginMain(gestor).setVisible(true));
+            // administrador de prueba
+            Administrador admin = new Administrador("admin");
+            gestorEmpleados.agregarUsuario(admin);
+
+            // LoginMain
+            LoginMain loginMain = new LoginMain(gestorEmpleados, gestorDepartamentos);
+            loginMain.setVisible(true);
+        });
     }
 
+    }
 
-
-}

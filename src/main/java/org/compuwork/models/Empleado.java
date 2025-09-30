@@ -31,7 +31,17 @@ public abstract class Empleado extends Usuario{
     public abstract String tipoEmpleado();
 
 
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public void setFechaIngreso(LocalDateTime fechaIngreso) {
+        this.fechaIngreso = fechaIngreso;
+    }
 
     public String getNombre() {
         return nombre;

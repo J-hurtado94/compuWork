@@ -76,6 +76,7 @@ public class GestorEmpleados {
     public List<Usuario> listarTodos() {
         return new ArrayList<>(usuarios);
     }
+
     public void asignarMetrica(Empleado empleado, Metrica metrica, int valor) {
         empleado.getMetricas().put(metrica, valor);
     }

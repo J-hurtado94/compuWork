@@ -1,5 +1,6 @@
 package org.compuwork.view;
 
+import org.compuwork.controllers.GestorDepartamentos;
 import org.compuwork.controllers.GestorEmpleados;
 
 import javax.swing.*;
@@ -7,10 +8,12 @@ import java.awt.*;
 
 public class LoginMain extends JFrame {
 
-    private GestorEmpleados gestor;
+    private GestorEmpleados gestorEmpleados;
+    private GestorDepartamentos gestorDepartamentos;
 
-    public LoginMain(GestorEmpleados gestor) {
-        this.gestor = gestor;
+    public LoginMain(GestorEmpleados gestorEmpleados, GestorDepartamentos gestorDepartamentos) {
+        this.gestorEmpleados = gestorEmpleados;
+        this.gestorDepartamentos = gestorDepartamentos;
 
         setTitle("Seleccionar Login");
         setSize(500, 400);
@@ -18,12 +21,10 @@ public class LoginMain extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
 
-        // Panel principal con BoxLayout vertical
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        // Logo centrado
         JLabel lblLogo = new JLabel();
         lblLogo.setAlignmentX(Component.CENTER_ALIGNMENT);
         ImageIcon icon = new ImageIcon("src/main/java/org/compuwork/assets/images/compuwork_logo.jpeg");
@@ -31,10 +32,10 @@ public class LoginMain extends JFrame {
         lblLogo.setIcon(new ImageIcon(img));
         mainPanel.add(lblLogo);
 
-        // Espacio entre logo y botones
+
         mainPanel.add(Box.createVerticalStrut(50));
 
-        // Panel de botones centrado
+        // Panel de botones
         JPanel buttonPanel = new JPanel(new GridLayout(1, 2, 20, 0));
         JButton btnAdminLogin = new JButton("Login Administrador");
         JButton btnEmpleadoLogin = new JButton("Login Empleado");
@@ -48,13 +49,13 @@ public class LoginMain extends JFrame {
 
         // Acción para login de administrador
         btnAdminLogin.addActionListener(e -> {
-            new LoginAdminView(gestor).setVisible(true);
+            new LoginAdminView(gestorEmpleados, gestorDepartamentos).setVisible(true);
             dispose();
         });
 
         // Acción para login de empleado
         btnEmpleadoLogin.addActionListener(e -> {
-            new LoginEmpleadoView(gestor).setVisible(true);
+            new LoginEmpleadoView(gestorEmpleados,gestorDepartamentos).setVisible(true);
             dispose();
         });
     }
