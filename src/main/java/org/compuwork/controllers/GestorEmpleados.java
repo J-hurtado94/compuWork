@@ -31,20 +31,24 @@ public class GestorEmpleados {
     }
 
 
-
     public Empleado actualizarEmpleadoPorId(String idUsuario, Empleado nuevosDatos) {
-        Optional<Usuario> opt = usuarios.stream()
+        return usuarios.stream()
                 .filter(u -> u.getIdUsuario().equals(idUsuario))
-                .findFirst();
-
-        if (opt.isPresent() && opt.get() instanceof Empleado) {
-            Empleado actualEm = (Empleado) opt.get();
-            actualEm.setCorreo(nuevosDatos.getCorreo());
-            actualEm.setSalario(nuevosDatos.getSalario());
-            return actualEm;
-        }
-        throw new EmpleadoNoEncontradoException(idUsuario);
+                .filter(u -> u instanceof Empleado)
+                .map(u -> (Empleado) u)
+                .findFirst()
+                .map(actualEm -> {
+                    actualEm.setNombre(nuevosDatos.getNombre());
+                    actualEm.setApellido(nuevosDatos.getApellido());
+                    actualEm.setCorreo(nuevosDatos.getCorreo());
+                    actualEm.setSalario(nuevosDatos.getSalario());
+                    actualEm.setDepartamento(nuevosDatos.getDepartamento());
+                    actualEm.setFechaIngreso(nuevosDatos.getFechaIngreso());
+                    return actualEm;
+                })
+                .orElseThrow(() -> new EmpleadoNoEncontradoException(idUsuario));
     }
+
 
     public void eliminarEmpleadoPorId(String idUsuario) {
         boolean removed = usuarios.removeIf(u -> u.getIdUsuario().equals(idUsuario));
@@ -77,8 +81,8 @@ public class GestorEmpleados {
         return new ArrayList<>(usuarios);
     }
 
-    public void asignarMetrica(Empleado empleado, Metrica metrica, int valor) {
-        empleado.getMetricas().put(metrica, valor);
+    public void asignarMetrica(Empleado empleado, Metrica metrica) {
+        empleado.asignarMetrica(metrica);
     }
 
     public void actualizarMetrica(Empleado empleado, Metrica metrica, int valor) {

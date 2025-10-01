@@ -46,7 +46,8 @@ public class AdminView extends JFrame {
         JButton btnListarEmpleados = new JButton("Listar Empleados");
         JButton btnGestionDepartamentos = new JButton("Gestionar Departamentos");
         JButton btnAsignarMetrica = new JButton("Asignar Métrica");
-        JButton btnReportes = new JButton("Reportes");
+        JButton btnReportes = new JButton("Reporte empleado");
+        JButton btnReporteDepto = new JButton("Reporte Dpto");
         JButton btnVolverLogin = new JButton("Volver a Login");
 
 
@@ -59,6 +60,7 @@ public class AdminView extends JFrame {
         panelBotones.add(btnGestionDepartamentos);
         panelBotones.add(btnAsignarMetrica);
         panelBotones.add(btnReportes);
+        panelBotones.add(btnReporteDepto);
         panelBotones.add(btnVolverLogin);
 
         // ---- Tabla empleados ----
@@ -157,15 +159,30 @@ public class AdminView extends JFrame {
             int fila = tablaEmpleados.getSelectedRow();
             if (fila >= 0) {
                 String id = (String) modeloTablaEmpleados.getValueAt(fila, 0);
-                String nombreDepto = JOptionPane.showInputDialog(this, "Nombre del departamento:");
-                Departamento d;
-                try {
-                    d = gestorDepartamentos.buscarODefault(nombreDepto);
-                } catch (Exception ex) {
-                    d = gestorDepartamentos.crearDepartamento(nombreDepto);
+
+                List<Departamento> departamentos = gestorDepartamentos.listarTodos();
+
+                if (departamentos.isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "No hay departamentos creados. Cree uno primero.");
+                    return;
                 }
-                gestorEmpleados.asignarEmpleadoADepartamento(id, d);
-                refrescarTablaEmpleados();
+
+                Departamento seleccionado = (Departamento) JOptionPane.showInputDialog(
+                        this,
+                        "Seleccione un departamento:",
+                        "Asignar a Departamento",
+                        JOptionPane.PLAIN_MESSAGE,
+                        null,
+                        departamentos.toArray(),
+                        departamentos.get(0)
+                );
+
+                if (seleccionado != null) {
+                    gestorEmpleados.asignarEmpleadoADepartamento(id, seleccionado);
+                    refrescarTablaEmpleados();
+                    JOptionPane.showMessageDialog(this, "Empleado asignado al departamento: " + seleccionado.getNombre());
+                }
+
             } else {
                 JOptionPane.showMessageDialog(this, "Seleccione un empleado.");
             }
@@ -205,8 +222,7 @@ public class AdminView extends JFrame {
                 Metrica[] metricas = Metrica.values();
                 Metrica seleccionada = (Metrica) JOptionPane.showInputDialog(
                         this,
-                        "Seleccione una métrica:" +
-                                "Se califica de 1 a 10",
+                        "Seleccione una métrica:",
                         "Asignar Métrica",
                         JOptionPane.PLAIN_MESSAGE,
                         null,
@@ -215,14 +231,9 @@ public class AdminView extends JFrame {
                 );
 
                 if (seleccionada != null) {
-                    String valorStr = JOptionPane.showInputDialog(this, "Ingrese valor numérico para " + seleccionada + ":");
-                    try {
-                        int valor = Integer.parseInt(valorStr);
-                        gestorEmpleados.asignarMetrica(emp, seleccionada, valor);
-                        JOptionPane.showMessageDialog(this, "Métrica asignada correctamente.");
-                    } catch (NumberFormatException ex) {
-                        JOptionPane.showMessageDialog(this, "El valor debe ser un número entero.");
-                    }
+                    gestorEmpleados.asignarMetrica(emp, seleccionada);
+                    JOptionPane.showMessageDialog(this,
+                            "Métrica " + seleccionada + " asignada con valor " + seleccionada.getValorMetrica());
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "Seleccione un empleado primero.");
@@ -253,6 +264,34 @@ public class AdminView extends JFrame {
             this.dispose();
             LoginMain login = new LoginMain(gestorEmpleados,gestorDepartamentos);
             login.setVisible(true);
+        });
+
+        btnReporteDepto.addActionListener(e -> {
+            String[] columnasReporteDpto = {"Departamento", "Empleado", "Métrica", "Valor"};
+            DefaultTableModel modelo = new DefaultTableModel(columnasReporteDpto, 0);
+
+            for (Departamento d : gestorDepartamentos.listarTodos()) {
+                for (Empleado emp : d.getEmpleados()) {
+                    if (emp.getMetricas().isEmpty()) {
+                        modelo.addRow(new Object[]{d.getNombre(), emp.getNombre(), "N/A", "N/A"});
+                    } else {
+                        emp.getMetricas().forEach((metrica, valor) ->
+                                modelo.addRow(new Object[]{
+                                        d.getNombre(),
+                                        emp.getNombre() + " " + emp.getApellido(),
+                                        metrica.name(),
+                                        valor
+                                })
+                        );
+                    }
+                }
+            }
+
+            JTable tabla = new JTable(modelo);
+            JScrollPane scrollPane = new JScrollPane(tabla);
+            scrollPane.setPreferredSize(new Dimension(600, 400));
+
+            JOptionPane.showMessageDialog(this, scrollPane, "Reporte de Desempeño por Departamento", JOptionPane.INFORMATION_MESSAGE);
         });
     }
 

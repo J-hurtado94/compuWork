@@ -50,10 +50,6 @@ public class Departamento {
 
     @Override
     public String toString() {
-        return "Departamento{" +
-                "idDepartamento='" + idDepartamento + '\'' +
-                ", nombre='" + nombre + '\'' +
-                ", empleados=" + empleados +
-                '}';
+        return nombre;
     }
 }

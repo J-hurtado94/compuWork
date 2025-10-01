@@ -27,7 +27,7 @@ public class EmpleadoView extends JFrame {
         panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         JButton btnVerMetricas = new JButton("Ver Mis Métricas");
-        JButton btnSalir = new JButton("Salir");
+        JButton btnSalir = new JButton("Volver al Login");
 
         panel.add(btnVerMetricas);
         panel.add(btnSalir);
