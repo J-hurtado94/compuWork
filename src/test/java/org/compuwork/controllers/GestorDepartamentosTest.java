@@ -32,7 +32,7 @@ class GestorDepartamentosTest {
         gestor.crearDepartamento("IT");
 
         assertThrows(CreacionDepartamentoInvalido.class, () -> {
-            gestor.crearDepartamento("IT"); // mismo nombre
+            gestor.crearDepartamento("IT");
         });
     }
 
