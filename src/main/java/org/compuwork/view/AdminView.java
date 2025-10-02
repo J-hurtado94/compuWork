@@ -73,7 +73,7 @@ public class AdminView extends JFrame {
 
         add(mainPanel);
 
-        // ================== ACCIONES ==================
+
 
         // Crear Permanente
         btnCrearPermanente.addActionListener(e -> {
@@ -109,7 +109,7 @@ public class AdminView extends JFrame {
             }
         });
 
-        // Actualizar empleado (modificar todos los campos menos ID)
+        // Actualizar empleado
         btnActualizar.addActionListener(e -> {
             int fila = tablaEmpleados.getSelectedRow();
             if (fila >= 0) {
