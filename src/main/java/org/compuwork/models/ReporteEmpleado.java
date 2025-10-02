@@ -23,7 +23,6 @@ private final Empleado empleado;
         StringBuilder sb = new StringBuilder();
         sb.append("=== Reporte de Empleado ===\n");
         sb.append("Nombre: ").append(empleado.getNombre()).append(" ").append(empleado.getApellido()).append("\n");
-        sb.append("ID: ").append(empleado.getIdEmpleado()).append("\n");
         sb.append("Departamento: ").append(empleado.getDepartamento() != null ? empleado.getDepartamento().getNombre() : "Sin asignar").append("\n");
         sb.append("Fecha ingreso: ").append(empleado.getFechaIngreso()).append("\n\n");
         sb.append("Métricas:\n");
